@@ -1,0 +1,13 @@
+.header {
+  /* position: absolute; */
+  height: 200px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--gray-700);
+}
+.header img {
+  height: 3rem;
+  margin-top: -8px;
+}
