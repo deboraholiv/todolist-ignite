@@ -10,8 +10,14 @@
 - Remover uma tarefa da listagem
 - Mostrar o progresso de conclusão das tarefas
 
-
-
-
+---
+##### Install 
+```bash
+  npm install
+```
+##### Running 
+```bash
+  npm run dev
+```
 
 
