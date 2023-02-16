@@ -7,6 +7,7 @@ import { NoTask } from './NoTask'
 interface Task {
   id: number
   content: string
+  isChecked: boolean
 }
 
 export function NewTask() {
@@ -19,7 +20,8 @@ export function NewTask() {
     event.preventDefault()
     const newTask = {
       id: Math.floor(Math.random() * 999999 + 1),
-      content: newTaskValue
+      content: newTaskValue,
+      isChecked: false
     }
     setTasks([...tasks, newTask])
     setNewTaskValue('')
@@ -30,23 +32,35 @@ export function NewTask() {
     setNewTaskValue(event.target.value)
   }
 
-  function deleteTask(taskToDelete: number){
-    const taskWithoutDeleteOne = tasks.filter(task=>{
-      return task.id !== taskToDelete
-    })
-    setTasks(taskWithoutDeleteOne)
-  }
-
   function handleNewTaskInvalid(event: InvalidEvent<HTMLInputElement>){
     event.target.setCustomValidity('Esse campo é obrigatório');
   }
+  
+  function deleteTask(taskToDelete: number){
+    const taskWithoutDeleteOne = tasks.filter(task=>{
+      if(task.isChecked === true) {
+        setCheckedCount(checkedCount - 1)
+      }
+      return (
+        task.id !== taskToDelete)
+      })
+    setTasks(taskWithoutDeleteOne)
+  }
 
-  function completeTask(taskChecked: number | boolean) {
-    if(taskChecked) {
-      setCheckedCount(checkedCount + 1)
-    } else {
-      setCheckedCount(checkedCount - 1)
-    }
+  function handleCheckboxChange(id: number) {
+    const taskComplete = tasks.map(task=>{
+      if(task.id===id) task.isChecked = !task.isChecked
+      return task
+    })
+    setTasks(taskComplete)
+  }
+
+  function handleCompleteProgress(progress: number | boolean ) {
+      if(!progress) {
+        setCheckedCount(checkedCount + 1)
+      } else {
+        setCheckedCount(checkedCount - 1)
+      }
   }
 
   return(
@@ -73,9 +87,22 @@ export function NewTask() {
           {tasks.length === 0 ? <span>{tasks.length}</span> : <span>{checkedCount} de {tasks.length}</span>}
         </p>
       </section>
-      {tasks.length === 0 ? <NoTask/> : <section className={styles.taskList}> {tasks.map(task => {
-          return <Task key={task.id} id={task.id} content={task.content} onDeleteTask={deleteTask} completeTask={completeTask}/>
-        })}</section>}
+      {tasks.length === 0 ? <NoTask/> : 
+        <section className={styles.taskList}> {tasks.map(task => {
+          return (
+            <Task 
+              key={task.id} 
+              id={task.id} 
+              content={task.content} 
+              isChecked={task.isChecked} 
+              onDeleteTask={deleteTask} 
+              progress={handleCompleteProgress} 
+              completeTask={handleCheckboxChange}
+            />
+          ) 
+        })}
+        </section>
+      }
     </>
   )
 }
