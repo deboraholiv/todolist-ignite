@@ -2,6 +2,8 @@
 
 ![To Do List](./src/assets/ToDo-List.png "To Do List")
 
+### [Deploy](https://todolist-ignite-beta.vercel.app/)
+
 #### Sobre o desafio
 - Adicionar uma nova tarefa
 - Marcar e desmarcar uma tarefa como concluída
