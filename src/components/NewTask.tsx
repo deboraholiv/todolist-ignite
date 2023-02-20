@@ -1,7 +1,7 @@
 import styles from './NewTask.module.css'
 import { Task } from './Task'
 import { PlusCircle } from 'phosphor-react'
-import { ChangeEvent, FormEvent, InvalidEvent, useState } from 'react'
+import { ChangeEvent, FormEvent, InvalidEvent, useEffect, useState } from 'react'
 import { NoTask } from './NoTask'
 
 interface Task {
@@ -10,11 +10,22 @@ interface Task {
   isChecked: boolean
 }
 
-export function NewTask() {
 
-  const [tasks, setTasks] = useState<Task[]>([])
+export function NewTask() {
+  
+  const [tasks, setTasks] = useState<Task[]>(() => {
+    const storageTask = localStorage.getItem('@taskList')
+    if(storageTask) {
+      return JSON.parse(storageTask)
+    }
+    return []
+  })
   const [newTaskValue, setNewTaskValue] = useState('')
   const [checkedCount, setCheckedCount] = useState(0)
+
+  useEffect(()=>{
+    localStorage.setItem('@taskList', JSON.stringify(tasks))
+  },[tasks])
 
   function handleAddNewTask(event: FormEvent) {
     event.preventDefault()
