@@ -4,11 +4,11 @@
 
 ### [Deploy](https://todolist-ignite-beta.vercel.app/)
 
-#### Sobre o desafio
-- Adicionar uma nova tarefa
-- Marcar e desmarcar uma tarefa como concluída
-- Remover uma tarefa da listagem
-- Mostrar o progresso de conclusão das tarefas
+#### Challenge
+- Create a new task
+- Mark/unmark a task as completed
+- Delete a task from the list
+- Show task completion progresss
 
 ---
 ##### Install 
@@ -19,5 +19,11 @@
 ```bash
   npm run dev
 ```
+
+---
+###### Feature
++ Save a task on localStorage 
++ Get a task list info from localStorage
++ Delete a task from localStorage
 
 
